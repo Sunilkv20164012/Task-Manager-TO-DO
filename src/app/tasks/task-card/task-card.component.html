@@ -1,0 +1,27 @@
+<mat-accordion multi="false" *ngIf="tasks.length > 0">
+  <mat-expansion-panel *ngFor="let task of tasks">
+    <mat-expansion-panel-header>
+      <mat-action-row>
+        <mat-icon *ngIf="task.status==StatusType.New" color="primary"></mat-icon>
+        <mat-icon *ngIf="task.status==StatusType.Pending" color="red">report</mat-icon>
+        <mat-icon *ngIf="task.status==StatusType.InProgress" color="yellow"></mat-icon>
+        <mat-icon *ngIf="task.status==StatusType.Done" color="green">done_all</mat-icon>
+        <p>{{ task.title }}</p>
+      </mat-action-row>
+      <mat-action-row>
+        {{ Date(tasks.deadlineDate)-Date(today) }}
+        <mat-icon *ngIf="task.category==CategoryType.Shopping">add_shopping_cart</mat-icon>
+        <mat-icon *ngIf="task.category==CategoryType.Medical">healing</mat-icon>
+        <mat-icon *ngIf="task.category==CategoryType.Groceries">fastfood</mat-icon>
+        <mat-icon *ngIf="task.category==CategoryType.Learning">account_balance</mat-icon>
+        <mat-icon *ngIf="task.category==CategoryType.Work">work</mat-icon>
+      </mat-action-row>
+
+    </mat-expansion-panel-header>
+    <mat-action-row>
+      <button mat-button color="primary">EDIT</button>
+      <button mat-button color="warn">DONE</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<p class="info-text mat-body-1" *ngIf="posts.length <= 0">No posts added yet!</p>
