@@ -1,12 +1,31 @@
-﻿<div class="p-4">
-    <div class="container">
-        <h1>Hi {{user.firstName}}!</h1>
-        <p>You're logged in with Angular 9!!</p>
-        <p><a routerLink="/users">Manage Users</a></p>
-    </div>
+﻿<div class="main" igxLayout>
+  <igx-nav-drawer id="navigation" [isOpen]="drawerState.open" [(pin)]="drawerState.pin">
+    <ng-template igxDrawer>
+      <nav>
+        <span igxDrawerItem [isHeader]="true">Components</span>
+
+        <span *ngFor="let item of navItems" igxDrawerItem [active]="item.text === selected" igxRipple (click)="navigate(item)">
+          <igx-icon fontSet="material">{{ item.name }}</igx-icon>
+          <span>{{ item.text }}</span>
+        </span>
+    </nav>
+    </ng-template>
+  </igx-nav-drawer>
+
+  <main igxFlex [class.mini-padding]="!drawerState.pin && drawerState.miniTemplate">
+    <span igxButton="icon" igxToggleAction="navigation">
+      <igx-icon fontSet="material">menu</igx-icon>
+    </span>
+
+    <h2>
+      Selected: <span class="setting-title">{{ selected }}</span>
+    </h2>
+  </main>
 </div>
-<div>
-  <button mat-fab (click)="openDialog()">
-    <mat-icon>add_circle</mat-icon>
+<div class="float-button">
+  <button mat-icon-button class="my-float" (click)="openDialog()">
+    <mat-icon color="primary">
+      add_circle
+    </mat-icon>
   </button>
 </div>
