@@ -8,6 +8,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { User } from '@app/_models';
 import { AccountService } from '@app/_services';
 import { TaskCreateComponent } from '../tasks/task-create/task-create.component';
+import { TaskListComponent } from '../tasks/task-card/task-card.component';
 
 @Component({
   encapsulation: ViewEncapsulation.None,

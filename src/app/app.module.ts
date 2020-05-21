@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
+import {MatExpansionModule} from '@angular/material/expansion';
 import {CdkScrollableModule} from '@angular/cdk/scrolling';
 
 
@@ -40,6 +41,10 @@ import { AlertComponent } from './_components';
 import { HomeComponent } from './home/home.component';
 ;
 import { TaskCreateComponent, ExampleHeader } from './tasks/task-create/task-create.component';
+import { TaskListComponent } from './tasks/task-card/task-card.component';
+import { StatusType } from './tasks/task.model';
+
+
 
 @NgModule({
   imports: [
@@ -48,7 +53,7 @@ import { TaskCreateComponent, ExampleHeader } from './tasks/task-create/task-cre
     HttpClientModule,
     AppRoutingModule,
     MatTabsModule, MatFormFieldModule, MatInputModule, MatSidenavModule, MatDialogModule, MatDatepickerModule,
-    MatNativeDateModule, MatButtonToggleModule, MatCardModule, MatIconModule,
+    MatNativeDateModule, MatButtonToggleModule, MatCardModule, MatIconModule, MatExpansionModule,
     FormsModule,
     BrowserAnimationsModule,
     IgxButtonModule, IgxIconModule, IgxLayoutModule, IgxNavigationDrawerModule,
@@ -60,7 +65,8 @@ import { TaskCreateComponent, ExampleHeader } from './tasks/task-create/task-cre
     AlertComponent,
     HomeComponent,
     TaskCreateComponent,
-    ExampleHeader
+    TaskListComponent,
+    ExampleHeader,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
