@@ -2,7 +2,7 @@
   <mat-expansion-panel *ngFor="let task of tasks">
     <mat-expansion-panel-header>
       <mat-action-row>
-        <mat-icon color="primary">{{iconTaskStatus(task.status)}}</mat-icon>
+        <mat-icon color="primary">{{iconTaskStatus(task.status,task.deadlineDate)}}</mat-icon>
         <p>{{ task.title }}</p>
       </mat-action-row>
       <mat-action-row>
@@ -12,8 +12,12 @@
 
     </mat-expansion-panel-header>
     <mat-action-row>
-      <button mat-button color="primary">EDIT</button>
-      <button mat-button color="warn">DONE</button>
+      <p>{{task.deadlineDate}}</p>
+      <p> {{task.taskSetDate}} </p>
+      <p> {{task.status}} </p>
+      <p> {{task.category}} </p>
+      <button mat-button color="primary"  (click)="onEditTask(task.id)">EDIT</button>
+      <button mat-button color="warn" (click)="onUpdateStatus(task.id)">DONE</button>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>

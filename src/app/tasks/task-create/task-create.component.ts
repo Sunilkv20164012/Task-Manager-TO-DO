@@ -8,11 +8,12 @@ import {
 } from '@angular/core';
 import {MatCalendar} from '@angular/material/datepicker';
 import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats} from '@angular/material/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
 import { TaskService } from "../task.service";
-import { StatusType } from '../task.model';
+import { CategoryType, Task } from '../task.model';
 
 @Component({
   selector: "app-task-create",
@@ -22,8 +23,14 @@ import { StatusType } from '../task.model';
 })
 export class TaskCreateComponent {
 
-  constructor(public tasksService: TaskService) {}
+  task: Task;
   exampleHeader = ExampleHeader;
+
+  constructor(public tasksService: TaskService, public dialogRef: MatDialogRef<TaskCreateComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.task = data.task;
+  }
+
 
   onAddTask(form: NgForm) {
     if (form.invalid) {
@@ -31,13 +38,32 @@ export class TaskCreateComponent {
     }
     var curdate = new Date();
     curdate.toISOString().slice(0,10);
-    console.log(curdate);
-    console.log(StatusType.New);
 
-    this.tasksService.addTask("id",form.value.title, form.value.deadline, curdate, form.value.group, StatusType.New);
+    if(!form.value.group)form.value.group=CategoryType.Other;
+
+    const newTask: Task = {
+      id: null,
+      title: form.value.title,
+      deadlineDate: form.value.deadline,
+      taskSetDate: curdate,
+      category: form.value.group,
+      status: true
+    };
+
+    this.tasksService.addTask(newTask);
     form.resetForm();
   }
+
+  closeDialog() {
+    this.dialogRef.close({ event: 'close', data: this.task });
+  }
+
 }
+
+
+
+
+
 
 /** Custom header component for datepicker. */
 @Component({

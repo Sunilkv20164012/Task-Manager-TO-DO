@@ -1,14 +1,12 @@
 ﻿import { Component, HostListener, Inject, OnInit, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { IgxNavigationDrawerComponent } from "igniteui-angular";
 import { DOCUMENT } from "@angular/common";
-
 import {MatDialog} from '@angular/material/dialog';
 
 
-import { User } from '@app/_models';
-import { AccountService } from '@app/_services';
+import { User } from '../account/user';
+import { AccountService} from '../account/account.service';
 import { TaskCreateComponent } from '../tasks/task-create/task-create.component';
-import { TaskListComponent } from '../tasks/task-card/task-card.component';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -25,15 +23,17 @@ export class HomeComponent implements OnInit{
     private typefacesLoaded = ["Titillium Web", "Roboto"];
     private typefaceUrl = "https://fonts.googleapis.com/css?family=";
 
-    constructor(private accountService: AccountService, public dialog: MatDialog, @Inject(DOCUMENT) private document: Document) {
+    constructor(private accountService: AccountService,
+      public dialog: MatDialog,
+      @Inject(DOCUMENT) private document: Document
+      ) {
         this.user = this.accountService.userValue;
     }
 
-    openDialog() {
+    openTaskCreateDialogue() {
       const dialogRef = this.dialog.open(TaskCreateComponent);
-
       dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
+      console.log(`Dialog result: ${result.data}`);
       });
     }
 

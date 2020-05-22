@@ -4,7 +4,7 @@ export interface Task {
   deadlineDate: Date,
   taskSetDate: Date,
   category: CategoryType,
-  status: StatusType
+  status: boolean
 }
 
 export enum CategoryType {
@@ -12,7 +12,8 @@ export enum CategoryType {
   Groceries,
   Medical,
   Learning,
-  Work
+  Work,
+  Other
 }
 export enum StatusType {
   Pending,
@@ -20,3 +21,4 @@ export enum StatusType {
   New,
   Done
 }
+

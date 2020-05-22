@@ -18,6 +18,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {CdkScrollableModule} from '@angular/cdk/scrolling';
 
 
+
 //navigation
 import {
 	IgxButtonModule,
@@ -37,13 +38,11 @@ import { fakeBackendProvider } from './_helpers';
 import { AppRoutingModule } from './app-routing.module';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { AppComponent } from './app.component';
-import { AlertComponent } from './_components';
 import { HomeComponent } from './home/home.component';
 ;
 import { TaskCreateComponent, ExampleHeader } from './tasks/task-create/task-create.component';
 import { TaskListComponent } from './tasks/task-card/task-card.component';
-import { StatusType } from './tasks/task.model';
-
+import { AlertComponent } from './alert/alert.component';
 
 
 @NgModule({
@@ -58,7 +57,8 @@ import { StatusType } from './tasks/task.model';
     BrowserAnimationsModule,
     IgxButtonModule, IgxIconModule, IgxLayoutModule, IgxNavigationDrawerModule,
     IgxRadioModule,	IgxRippleModule, IgxSwitchModule,	IgxToggleModule,
-    CdkScrollableModule
+    CdkScrollableModule,
+    HttpClientModule
   ],
   declarations: [
     AppComponent,
