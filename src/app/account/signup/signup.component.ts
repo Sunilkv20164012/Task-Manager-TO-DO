@@ -5,10 +5,10 @@ import { Subscription } from "rxjs";
 import { AuthService } from "../auth.service";
 
 @Component({
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"]
+  templateUrl: "./signup.component.html",
+  styleUrls: ["./signup.component.css"]
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class SignupComponent implements OnInit, OnDestroy {
   isLoading = false;
   private authStatusSub: Subscription;
 
@@ -22,12 +22,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     );
   }
 
-  onLogin(form: NgForm) {
+  onSignup(form: NgForm) {
     if (form.invalid) {
       return;
     }
     this.isLoading = true;
-    this.authService.login(form.value.email, form.value.password);
+    this.authService.createUser(form.value.email, form.value.password);
   }
 
   ngOnDestroy() {

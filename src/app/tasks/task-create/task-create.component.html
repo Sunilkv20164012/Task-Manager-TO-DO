@@ -1,43 +1,51 @@
 <mat-card>
-  <form (submit)="onAddTask(taskForm)" #taskForm="ngForm">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <h1 mat-dialog-title>To-Do Create/Edit!</h1>
+  <form [formGroup]="form" *ngIf="!isLoading">
     <!-- title -->
     <mat-form-field>
-      <input
-        matInput type="text" name="title"
-        ngModel required  minlength="3" placeholder="Task Title" #title="ngModel">
-      <mat-error *ngIf="title.invalid">Please enter a Task title.</mat-error>
+      <input matInput type="text" formControlName="title" placeholder="Post Title">
+      <mat-error *ngIf="form.get('title').invalid">Please enter a post title.</mat-error>
     </mat-form-field>
     <!-- deadline date -->
     <mat-form-field>
       <mat-label>Deadline Date</mat-label>
-      <input matInput [matDatepicker]="picker" type="text" name="deadline" ngModel required #deadline="ngModel">
+      <input matInput [matDatepicker]="picker" type="text" formControlName="deadline">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker [calendarHeaderComponent]="exampleHeader"></mat-datepicker>
-      <mat-error *ngIf="deadline.invalid">Please enter valid Date</mat-error>
+      <mat-error *ngIf="form.get('deadline').invalid">Please enter valid Date</mat-error>
     </mat-form-field>
     <!-- category -->
-    <mat-button-toggle-group #group="matButtonToggleGroup">
-      <mat-button-toggle value="1" >
-        <mat-icon>add_shopping_cart</mat-icon>
-      </mat-button-toggle>
-      <mat-button-toggle value="2" >
-        <mat-icon>work</mat-icon>
-      </mat-button-toggle>
-      <mat-button-toggle value="3">
-        <mat-icon>healing</mat-icon>
-      </mat-button-toggle>
-    </mat-button-toggle-group>
-    <div>Selected value: {{group.value}}</div>
+    <div class="category-toggle">
+      <mat-button-toggle-group formControlName="group" appearance="legacy" name="fontStyle" aria-label="Font Style">
+        <mat-button-toggle value=0 >
+          <mat-icon>add_shopping_cart</mat-icon>
+          <p> shopping </p>
+        </mat-button-toggle>
+        <mat-button-toggle value=1 >
+          <mat-icon>work</mat-icon>
+          <p> work </p>
+        </mat-button-toggle>
+        <mat-button-toggle value=2>
+          <mat-icon>healing</mat-icon>
+          <p> medical </p>
+        </mat-button-toggle>
+        <mat-button-toggle value=3>
+          <mat-icon>class</mat-icon>
+          <p> learn </p>
+        </mat-button-toggle>
+        <mat-button-toggle value=4>
+          <mat-icon>extension</mat-icon>
+          <p> other </p>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+      <div><p>Selected Category: {{form.get('group').value}}</p></div>
+    </div>
 
-    <!-- save -->
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit">SAVE</button>
-      <!-- delete -->
-      <!-- <button
-      mat-raised-button
-      color="warn"
-      type="submit">DELETE</button> -->
+
+    <div mat-dialog-actions>
+      <button mat-button color="primary" type="submit" (click)="onAddTask()">SAVE</button>
+      <button mat-button mat-dialog-close color="warn" type="submit" (click)="onDelete(task.id)">DELETE</button>
+    </div>
   </form>
 </mat-card>

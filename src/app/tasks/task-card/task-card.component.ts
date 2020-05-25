@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { Task, StatusType, CategoryType } from "../task.model";
 import { TaskService } from "../task.service";
 import { TaskCreateComponent } from '../task-create/task-create.component';
+import { AuthService } from "../../account/auth.service";
 
 
 
@@ -17,20 +18,52 @@ import { TaskCreateComponent } from '../task-create/task-create.component';
 export class TaskListComponent implements OnInit, OnDestroy {
 
   tasks: Task[] = [];
+  isLoading = false;
+  userIsAuthenticated = false;
+  userId: string;
   private tasksSub: Subscription;
+  private authStatusSub: Subscription;
 
-  constructor(public taskService: TaskService, public dialog: MatDialog) {}
+  constructor(public taskService: TaskService, private authService: AuthService, public dialog: MatDialog) {}
 
   ngOnInit() {
+    this.isLoading = true;
     this.taskService.getTasks();
+    this.userId = this.authService.getUserId();
     this.tasksSub = this.taskService.getTaskUpdateListener()
       .subscribe((tasks: Task[]) => {
+        this.isLoading = false;
         this.tasks = tasks;
       });
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe(isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated;
+        this.userId = this.authService.getUserId();
+      });
+  }
+
+  onUpdateStatus(taskId: string, task: Task) {
+    task.status=false;
+    this.taskService.updateTask(taskId,task);
+  }
+
+  onEditTask(task: Task) {
+    const dialogRef = this.dialog.open(TaskCreateComponent,{
+      data: {
+        task: task,
+        mode: "edit"
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   ngOnDestroy() {
     this.tasksSub.unsubscribe();
+    this.authStatusSub.unsubscribe();
   }
 
   iconTaskStatus(status: boolean, deadline: Date)
@@ -64,24 +97,6 @@ export class TaskListComponent implements OnInit, OnDestroy {
       [CategoryType.Medical]: 'healing'
     }
     return taskCardClass[taskCategory];
-  }
-
-  onUpdateStatus(taskId: string) {
-    const updatedTask = this.tasks.filter(task => task.id === taskId);
-    updatedTask[0].status=false;
-    this.taskService.updateTask(taskId,updatedTask[0]);
-  }
-
-  onEditTask(taskId: string) {
-    const updatedTask = this.tasks.filter(task => task.id === taskId);
-    const dialogRef = this.dialog.open(TaskCreateComponent,{
-      data: {
-        task: updatedTask
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 
   daysRemaining(deadlineDate: Date){

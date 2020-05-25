@@ -4,7 +4,8 @@ export interface Task {
   deadlineDate: Date,
   taskSetDate: Date,
   category: CategoryType,
-  status: boolean
+  status: boolean,
+  creator: string
 }
 
 export enum CategoryType {

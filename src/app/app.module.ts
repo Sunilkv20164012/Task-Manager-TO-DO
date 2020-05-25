@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -15,6 +17,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
+
 import {CdkScrollableModule} from '@angular/cdk/scrolling';
 
 
@@ -32,17 +37,20 @@ import {
  } from "igniteui-angular";
 
 
-// used to create fake backend
-import { fakeBackendProvider } from './_helpers';
-
 import { AppRoutingModule } from './app-routing.module';
-import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { HeaderComponent } from './header/header.component';
+
+import { LoginComponent } from './account/login/login.component';
+import { SignupComponent } from './account/signup/signup.component';
 ;
 import { TaskCreateComponent, ExampleHeader } from './tasks/task-create/task-create.component';
 import { TaskListComponent } from './tasks/task-card/task-card.component';
 import { AlertComponent } from './alert/alert.component';
+import { ErrorInterceptor } from './error-interceptor';
+import { AuthInterceptor } from './account/auth-interceptor';
+import { ErrorComponent } from "./error/error.component";
 
 
 @NgModule({
@@ -51,8 +59,8 @@ import { AlertComponent } from './alert/alert.component';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    MatTabsModule, MatFormFieldModule, MatInputModule, MatSidenavModule, MatDialogModule, MatDatepickerModule,
-    MatNativeDateModule, MatButtonToggleModule, MatCardModule, MatIconModule, MatExpansionModule,
+    MatToolbarModule, MatTabsModule, MatFormFieldModule, MatInputModule, MatSidenavModule, MatDialogModule, MatProgressSpinnerModule,
+    MatDatepickerModule, MatNativeDateModule, MatButtonToggleModule, MatCardModule, MatIconModule, MatExpansionModule,
     FormsModule,
     BrowserAnimationsModule,
     IgxButtonModule, IgxIconModule, IgxLayoutModule, IgxNavigationDrawerModule,
@@ -67,15 +75,16 @@ import { AlertComponent } from './alert/alert.component';
     TaskCreateComponent,
     TaskListComponent,
     ExampleHeader,
+    HeaderComponent,
+    LoginComponent,
+    SignupComponent
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
-    // provider used to create fake backend
-    fakeBackendProvider
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ErrorComponent]
 })
 export class AppModule {
 }

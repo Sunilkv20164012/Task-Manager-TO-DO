@@ -1,21 +1,19 @@
 ﻿import { Component } from '@angular/core';
 
-import { AccountService } from './account/account.service';
-import { User } from './account/user';
+import { AuthService } from "./account/auth.service";
 
 @Component({
-  selector: 'app',
+  selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css']
 })
 export class AppComponent {
-    user: User;
 
-    constructor(private accountService: AccountService) {
-        this.accountService.user.subscribe(x => this.user = x);
-    }
+  constructor(
+    private authService: AuthService,
+  ) {}
 
-    logout() {
-        this.accountService.logout();
-    }
+  ngOnInit() {
+    this.authService.autoAuthUser();
+  }
 }

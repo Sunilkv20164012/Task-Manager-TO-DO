@@ -4,8 +4,7 @@ import { DOCUMENT } from "@angular/common";
 import {MatDialog} from '@angular/material/dialog';
 
 
-import { User } from '../account/user';
-import { AccountService} from '../account/account.service';
+import { AuthService} from '../account/auth.service';
 import { TaskCreateComponent } from '../tasks/task-create/task-create.component';
 
 @Component({
@@ -15,7 +14,6 @@ import { TaskCreateComponent } from '../tasks/task-create/task-create.component'
   styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnInit{
-    user: User;
     public title = "Samples";
     private isIE = !((window as any).ActiveXObject) && "ActiveXObject" in window;
     private theme = "default-theme";
@@ -23,12 +21,10 @@ export class HomeComponent implements OnInit{
     private typefacesLoaded = ["Titillium Web", "Roboto"];
     private typefaceUrl = "https://fonts.googleapis.com/css?family=";
 
-    constructor(private accountService: AccountService,
+    constructor(private authService: AuthService,
       public dialog: MatDialog,
       @Inject(DOCUMENT) private document: Document
-      ) {
-        this.user = this.accountService.userValue;
-    }
+      ) {}
 
     openTaskCreateDialogue() {
       const dialogRef = this.dialog.open(TaskCreateComponent);

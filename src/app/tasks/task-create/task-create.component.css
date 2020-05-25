@@ -2,6 +2,10 @@ mat-form-field,
 textarea {
   width: 100%;
 }
+mat-spinner {
+  margin: auto;
+}
+
 .example-header {
   display: flex;
   align-items: center;
@@ -19,4 +23,12 @@ textarea {
   margin: -22%;
 }
 
+/* .category-toggle {
+  display: flex;
+  justify-content: space-between;
+} */
+
+mat-button-toggle-group {
+  margin-left: 12px;
+}
 

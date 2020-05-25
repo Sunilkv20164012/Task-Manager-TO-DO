@@ -5,7 +5,8 @@ const taskSchema = mongoose.Schema({
   deadlineDate: { type: Date, required: true },
   taskSetDate: { type: Date, required: true, default: Date.now },
   category: { type: Number, required: true},
-  status: { type: Boolean, required: true }
+  status: { type: Boolean, required: true },
+  creator: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
 });
 
 module.exports = mongoose.model("Task", taskSchema);
