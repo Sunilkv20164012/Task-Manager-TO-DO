@@ -1,5 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 // import { Subscription } from "rxjs";
 
 // import { ErrorService } from "./error.service";
@@ -12,7 +12,8 @@ import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 export class ErrorComponent {
   // data: { message: string };
   // private errorSub: Subscription;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { message: string }) {}
+  constructor(public dialogRef: MatDialogRef<ErrorComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { message: string }) {}
   // constructor(private errorService: ErrorService) {}
 
   // ngOnInit() {
@@ -24,6 +25,10 @@ export class ErrorComponent {
   // onHandleError() {
   //   this.errorService.handleError();
   // }
+
+  closeDialog() {
+    this.dialogRef.close({ event: 'close' });
+  }
 
   // ngOnDestroy() {
   //   this.errorSub.unsubscribe();

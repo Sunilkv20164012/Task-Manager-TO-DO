@@ -43,6 +43,7 @@ router.put(
   "/:id",
   checkAuth,
   (req, res, next) => {
+    console.log(req.params.id + " ::::: " + req.body.id);
     const task = new Task({
       _id: req.body.id,
       title: req.body.title,
@@ -68,19 +69,18 @@ router.put(
   }
 );
 
-router.get("", (req, res, next) => {
+router.get(
+  "",
+  checkAuth,
+  (req, res, next) => {
 
-  const taskQuery = Task.find();
-  let fetchedTasks;
-  taskQuery
+
+
+  Task.find({creator: req.userData.userId})
     .then(documents => {
-      fetchedTasks = documents;
-      return Task.count();
-    })
-    .then(count => {
       res.status(200).json({
         message: "Tasks fetched successfully!",
-        tasks: fetchedTasks,
+        tasks: documents
       });
     })
     .catch(error => {

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { Router } from "@angular/router";
 
 
 import { Task, StatusType, CategoryType } from "../task.model";
@@ -24,7 +25,10 @@ export class TaskListComponent implements OnInit, OnDestroy {
   private tasksSub: Subscription;
   private authStatusSub: Subscription;
 
-  constructor(public taskService: TaskService, private authService: AuthService, public dialog: MatDialog) {}
+  constructor(public taskService: TaskService,
+    private router: Router,
+    private authService: AuthService,
+     public dialog: MatDialog) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -58,6 +62,9 @@ export class TaskListComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      this.router.navigate(["/"]).then(() => {
+        window.location.reload();
+      });
     });
   }
 
@@ -105,4 +112,5 @@ export class TaskListComponent implements OnInit, OnDestroy {
     var diffDays:any = Math.floor((date1 - date2) / (1000 * 60 * 60 * 24));
     return diffDays;
   }
+
 }

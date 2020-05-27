@@ -3,12 +3,12 @@
   margin-top: 1rem;
 }
 
-/* mat-panel-title {
+mat-panel-title {
   flex-basis: 0;
 }
 mat-panel-description {
   flex-basis: 100%;
-} */
+}
 
 .info-text {
   text-align: center;

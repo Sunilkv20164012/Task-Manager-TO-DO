@@ -14,6 +14,7 @@ import { ActivatedRoute, ParamMap } from "@angular/router";
 import {Subject, Subscription} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 
 
 import { TaskService } from "../task.service";
@@ -29,7 +30,7 @@ import { AuthService } from "../../account/auth.service";
 })
 export class TaskCreateComponent implements OnInit, OnDestroy {
 
-  task: Task;
+  task: Task | null;
   isLoading = false;
   form: FormGroup;
   private mode = "create";
@@ -39,12 +40,16 @@ export class TaskCreateComponent implements OnInit, OnDestroy {
   exampleHeader = ExampleHeader;
 
   constructor(public tasksService: TaskService,
-    public route: ActivatedRoute,
+    private router: Router,
     private authService: AuthService,
     public dialogRef: MatDialogRef<TaskCreateComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {task: Task, mode: string}) {
-    this.task = data.task;
-    this.mode = data.mode;
+      if(data){
+        console.log(data.task);
+        this.task = data.task;
+        this.mode = data.mode;
+        this.taskId = data.task.id;
+      }
   }
 
 
@@ -57,39 +62,14 @@ export class TaskCreateComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       });
       // form validation
-    this.form = new FormGroup({
-      title: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(3)]
-      }),
-      content: new FormControl(null, { validators: [Validators.required] })
-    });
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has("taskId")) {
-        this.mode = "edit";
-        this.taskId = paramMap.get("taskId");
-        this.isLoading = true;
-        this.tasksService.getTask(this.taskId).subscribe(taskData => {
-          this.isLoading = false;
-          this.task = {
-            id: taskData._id,
-            title: taskData.title,
-            deadlineDate: taskData.deadlineDate,
-            taskSetDate: taskData.taskSetDate,
-            category: taskData.category,
-            status: taskData.status,
-            creator: taskData.creator
-          };
-          this.form.setValue({
-            title: this.task.title,
-            deadline: this.task.deadlineDate,
-            group: this.task.category
-          });
-        });
-      } else {
-        this.mode = "create";
-        this.taskId = null;
-      }
-    });
+      this.form = new FormGroup({
+        title: new FormControl(this.task ? this.task.title : null, {
+          validators: [Validators.required, Validators.minLength(3)]
+        }),
+        deadline: new FormControl(this.task ? this.task.deadlineDate : null, { validators: [Validators.required] }),
+        group: new FormControl(this.task ? this.task.category : CategoryType.Groceries,{ validators: [Validators.required] })
+      });
+      // this.form.setValue({group: CategoryType.Groceries});
   }
 
 
@@ -111,16 +91,24 @@ export class TaskCreateComponent implements OnInit, OnDestroy {
 
     this.isLoading = true;
     if (this.mode === "create") {
-      this.tasksService.addTask(newTask);
+      this.tasksService.addTask(newTask)
+      .subscribe(responseData => {
+        this.closeDialog();
+      });
     }else{
       newTask.id = this.taskId;
       newTask.title = this.form.value.title;
       newTask.deadlineDate = this.form.value.deadlineDate;
       newTask.category = this.form.value.category;
-      this.tasksService.updateTask( this.taskId, newTask );
+      console.log("mode" + this.mode + " "+this.task);
+      this.tasksService.updateTask(this.taskId, newTask)
+      .subscribe(() => {
+        console.log("now navigating to home");
+        this.closeDialog();
+
+      });
     }
 
-    this.form.reset();
   }
 
   onDelete(postId: string) {
@@ -130,6 +118,7 @@ export class TaskCreateComponent implements OnInit, OnDestroy {
     }, () => {
       this.isLoading = false;
     });
+    this.closeDialog();
   }
 
   closeDialog() {

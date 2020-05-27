@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Router } from "@angular/router";
 
 
 
@@ -13,7 +12,7 @@ export class TaskService {
   private tasks: Task[] = [];
   private tasksUpdated = new Subject<Task[]>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient) {}
 
   getTasks() {
     this.http
@@ -57,20 +56,14 @@ export class TaskService {
   }
 
   addTask(newTask: Task ) {
-
-    this.http
+    return this.http
       .post<{ message: string,taskId: string }>("http://localhost:3000/api/tasks", newTask)
-      .subscribe(responseData => {
-        this.router.navigate(["/"]);
-      });
   }
 
   updateTask(taskId: string,task: Task) {
-    this.http
+    console.log(taskId + " ; " + task);
+    return this.http
     .put("http://localhost:3000/api/tasks/" + taskId, task)
-      .subscribe(() => {
-        this.router.navigate(["/"]);
-      });
   }
 
   deletePost(taskId: string) {

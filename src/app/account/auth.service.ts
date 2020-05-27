@@ -94,7 +94,9 @@ export class AuthService {
     this.userId = null;
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
-    this.router.navigate(["/"]);
+    this.router.navigate(["/"]).then(() => {
+      window.location.reload();
+    });
   }
 
   private setAuthTimer(duration: number) {
