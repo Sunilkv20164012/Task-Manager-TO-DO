@@ -18,6 +18,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSelectModule} from '@angular/material/select';
+
 
 
 import {CdkScrollableModule} from '@angular/cdk/scrolling';
@@ -60,7 +62,7 @@ import { ErrorComponent } from "./error/error.component";
     HttpClientModule,
     AppRoutingModule,
     MatToolbarModule, MatTabsModule, MatFormFieldModule, MatInputModule, MatSidenavModule, MatDialogModule, MatProgressSpinnerModule,
-    MatDatepickerModule, MatNativeDateModule, MatButtonToggleModule, MatCardModule, MatIconModule, MatExpansionModule,
+    MatDatepickerModule, MatNativeDateModule, MatButtonToggleModule, MatCardModule, MatIconModule, MatExpansionModule, MatSelectModule,
     FormsModule,
     BrowserAnimationsModule,
     IgxButtonModule, IgxIconModule, IgxLayoutModule, IgxNavigationDrawerModule,

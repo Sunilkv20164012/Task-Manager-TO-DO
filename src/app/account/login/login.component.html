@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="col-md-6 offset-md-3 mt-5">
   <mat-spinner *ngIf="isLoading"></mat-spinner>
   <form (submit)="onLogin(loginForm)" #loginForm="ngForm" *ngIf="!isLoading">
     <mat-form-field>
