@@ -73,9 +73,10 @@ export class TaskListComponent implements OnInit, OnDestroy {
     this.authStatusSub.unsubscribe();
   }
 
-  iconTaskStatus(status: boolean, deadline: Date)
+  iconTaskStatus(status: boolean, startDate: Date, deadline: Date)
   {
-    var daysrem = this.daysRemaining(deadline);
+    var daystoStart = this.daysRemaining(startDate);
+    var daystoDead = this.daysRemaining(deadline);
 
     const taskCardClass = {
       [StatusType.Done]: 'done_all',
@@ -86,11 +87,14 @@ export class TaskListComponent implements OnInit, OnDestroy {
     if(!status){
       return taskCardClass[StatusType.Done];
     }
-    else if(daysrem<0){
-      return taskCardClass[StatusType.Pending];
+    else if(daystoStart>0){
+      return taskCardClass[StatusType.New];
+    }
+    else if(daystoDead>0){
+      return taskCardClass[StatusType.InProgress];
     }
     else{
-      return taskCardClass[StatusType.New];
+      return taskCardClass[StatusType.Pending];
     }
   }
 
@@ -98,10 +102,10 @@ export class TaskListComponent implements OnInit, OnDestroy {
   {
     const taskCardClass = {
       [CategoryType.Shopping]: 'add_shopping_cart',
-      [CategoryType.Groceries]: 'fastfood',
-      [CategoryType.Learning]: 'account_balance',
       [CategoryType.Work]: 'work',
-      [CategoryType.Medical]: 'healing'
+      [CategoryType.Medical]: 'healing',
+      [CategoryType.Learning]: 'account_balance',
+      [CategoryType.Other]: 'extension',
     }
     return taskCardClass[taskCategory];
   }
@@ -112,5 +116,4 @@ export class TaskListComponent implements OnInit, OnDestroy {
     var diffDays:any = Math.floor((date1 - date2) / (1000 * 60 * 60 * 24));
     return diffDays;
   }
-
 }

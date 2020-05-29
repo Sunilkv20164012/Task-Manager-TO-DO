@@ -25,7 +25,7 @@ export class TaskService {
             id: task._id,
             title: task.title,
             deadlineDate: task.deadlineDate,
-            taskSetDate: task.taskSetDate,
+            startDate: task.startDate,
             category: task.category,
             status: task.status,
             creator: task.creator
@@ -48,7 +48,7 @@ export class TaskService {
       _id: string;
       title: string;
       deadlineDate: Date;
-      taskSetDate: Date;
+      startDate: Date;
       category: CategoryType;
       status: boolean;
       creator: string;

@@ -1,24 +1,31 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 <div class="col-md-6 offset-md-3 mt-5">
-  <mat-accordion multi="false" *ngIf="tasks.length > 0 && !isLoading">
+  <mat-accordion multi="false" *ngIf="tasks.length > 0 && !isLoading" hideToggle>
     <mat-expansion-panel *ngFor="let task of tasks">
-      <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+      <mat-expansion-panel-header >
         <mat-panel-title>
-          <mat-icon color="primary">{{iconTaskStatus(task.status,task.deadlineDate)}}</mat-icon>
+          <mat-icon class="example-icon" color="primary">{{iconTaskStatus(task.status, task.startDate, task.deadlineDate)}}</mat-icon>
         </mat-panel-title>
         <mat-panel-description>
-          <p>{{ task.title }}</p>
+          {{ task.title }}
         </mat-panel-description>
-        <mat-action-row>
-          {{ daysRemaining(task.deadlineDate) }}
-          <mat-icon color="primary">{{iconTaskCategory(task.category)}}</mat-icon>
-        </mat-action-row>
+        <mat-icon class="example-icon" color="primary">{{iconTaskCategory(task.category)}}</mat-icon>
       </mat-expansion-panel-header>
+      <mat-toolbar>
+        <mat-toolbar-row>
+          <div *ngIf="daysRemaining(task.deadlineDate) >= 0" style="color:blueviolet;">
+            {{ daysRemaining(task.deadlineDate) }} days rem.
+          </div>
+          <div *ngIf="daysRemaining(task.deadlineDate) < 0" text style="color:red;">
+            {{ (-1)*daysRemaining(task.deadlineDate) }} days late.
+          </div>
+          <span class="example-spacer"></span>
+          <p>{{task.deadlineDate}}</p>
+          <p> {{task.status}} </p>
+          <p> {{task.category}} </p>
+        </mat-toolbar-row>
+      </mat-toolbar>
       <mat-action-row>
-        <p>{{task.deadlineDate}}</p>
-        <p> {{task.taskSetDate}} </p>
-        <p> {{task.status}} </p>
-        <p> {{task.category}} </p>
         <button mat-button color="primary"  (click)="onEditTask(task)">EDIT</button>
         <button mat-button color="warn" (click)="onUpdateStatus(task.id,task)">DONE</button>
       </mat-action-row>

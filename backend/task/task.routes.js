@@ -13,7 +13,7 @@ router.post(
     const task = new Task({
       title: req.body.title,
       deadlineDate: req.body.deadlineDate,
-      taskSetDate: req.body.taskSetDate,
+      startDate: req.body.startDate,
       category: req.body.category,
       status: req.body.status,
       creator: req.userData.userId
@@ -48,7 +48,7 @@ router.put(
       _id: req.body.id,
       title: req.body.title,
       deadlineDate: req.body.deadlineDate,
-      taskSetDate: req.body.taskSetDate,
+      startDate: req.body.startDate,
       category: req.body.category,
       status: req.body.status,
       creator: req.userData.userId

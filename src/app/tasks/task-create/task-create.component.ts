@@ -66,10 +66,10 @@ export class TaskCreateComponent implements OnInit, OnDestroy {
         title: new FormControl(this.task ? this.task.title : null, {
           validators: [Validators.required, Validators.minLength(3)]
         }),
+        startdate: new FormControl(this.task ? this.task.startDate : null, { validators: [Validators.required] }),
         deadline: new FormControl(this.task ? this.task.deadlineDate : null, { validators: [Validators.required] }),
-        group: new FormControl(this.task ? this.task.category : CategoryType.Groceries,{ validators: [Validators.required] })
+        group: new FormControl(this.task ? this.task.category : CategoryType.Other,{ validators: [Validators.required] })
       });
-      // this.form.setValue({group: CategoryType.Groceries});
   }
 
 
@@ -83,7 +83,7 @@ export class TaskCreateComponent implements OnInit, OnDestroy {
       id: null,
       title: this.form.value.title,
       deadlineDate: this.form.value.deadline,
-      taskSetDate: curdate,
+      startDate: curdate,
       category: this.form.value.group,
       status: true,
       creator: null

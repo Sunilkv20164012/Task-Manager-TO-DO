@@ -5,7 +5,15 @@
     <!-- title -->
     <mat-form-field>
       <input matInput type="text" formControlName="title" placeholder="Post Title">
-      <mat-error *ngIf="form.get('title').invalid">Please enter a post title.</mat-error>
+      <mat-error *ngIf="form.get('title').invalid">Please enter a Task title.</mat-error>
+    </mat-form-field>
+    <!-- task start date -->
+    <mat-form-field>
+      <mat-label>Start Date</mat-label>
+      <input matInput [matDatepicker]="picker" type="text" formControlName="startdate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker [calendarHeaderComponent]="exampleHeader"></mat-datepicker>
+      <mat-error *ngIf="form.get('startdate').invalid">Please enter valid start Date</mat-error>
     </mat-form-field>
     <!-- deadline date -->
     <mat-form-field>

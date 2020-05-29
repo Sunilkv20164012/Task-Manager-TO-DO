@@ -1,8 +1,8 @@
 export interface Task {
   id: string,
   title: string,
+  startDate: Date,
   deadlineDate: Date,
-  taskSetDate: Date,
   category: CategoryType,
   status: boolean,
   creator: string
@@ -10,10 +10,9 @@ export interface Task {
 
 export enum CategoryType {
   Shopping,
-  Groceries,
+  Work,
   Medical,
   Learning,
-  Work,
   Other
 }
 export enum StatusType {
