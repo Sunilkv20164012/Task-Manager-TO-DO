@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from "@angular/core";
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Router } from "@angular/router";
@@ -12,6 +12,7 @@ import { AuthService } from "../../account/auth.service";
 
 
 @Component({
+  encapsulation: ViewEncapsulation.None,
   selector: "task-card",
   templateUrl: "./task-card.component.html",
   styleUrls: ["./task-card.component.css"]
@@ -50,7 +51,9 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
   onUpdateStatus(taskId: string, task: Task) {
     task.status=false;
-    this.taskService.updateTask(taskId,task);
+    this.taskService.updateTask(taskId,task).subscribe(response =>{
+      console.log(response);
+    });
   }
 
   onEditTask(task: Task) {
@@ -107,6 +110,11 @@ export class TaskListComponent implements OnInit, OnDestroy {
       [CategoryType.Learning]: 'account_balance',
       [CategoryType.Other]: 'extension',
     }
+    return taskCardClass[taskCategory];
+  }
+  textTaskCategory(taskCategory: number)
+  {
+    const taskCardClass = ['shopping', 'work', 'medical', 'learning', 'other'  ]
     return taskCardClass[taskCategory];
   }
 

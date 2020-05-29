@@ -32,18 +32,16 @@ main.mini-padding {
   border-radius: 0;
 }
 
-.float-button{
-	position:fixed;
-	// display: flex;
+
+.my-float{
+  position:fixed;
   justify-content: center;
   width: 120px;
 	height:60px;
 	bottom:100px;
   right:100px;
-}
-button.my-float{
+
   color:#FFF;
-  background-color: #FFF;
   border:0;
   font-size: 50px;
 }

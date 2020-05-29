@@ -43,7 +43,7 @@ router.put(
   "/:id",
   checkAuth,
   (req, res, next) => {
-    console.log(req.params.id + " ::::: " + req.body.id);
+    console.log(req.params.id + " ::::: " +  req.body.status);
     const task = new Task({
       _id: req.body.id,
       title: req.body.title,

@@ -10,22 +10,22 @@
     <!-- task start date -->
     <mat-form-field>
       <mat-label>Start Date</mat-label>
-      <input matInput [matDatepicker]="picker" type="text" formControlName="startdate">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker [calendarHeaderComponent]="exampleHeader"></mat-datepicker>
+      <input matInput [matDatepicker]="picker1" type="text" formControlName="startdate">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1 [calendarHeaderComponent]="exampleHeader"></mat-datepicker>
       <mat-error *ngIf="form.get('startdate').invalid">Please enter valid start Date</mat-error>
     </mat-form-field>
     <!-- deadline date -->
     <mat-form-field>
       <mat-label>Deadline Date</mat-label>
-      <input matInput [matDatepicker]="picker" type="text" formControlName="deadline">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker [calendarHeaderComponent]="exampleHeader"></mat-datepicker>
+      <input matInput [matDatepicker]="picker2" type="text" formControlName="deadline">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2 [calendarHeaderComponent]="exampleHeader"></mat-datepicker>
       <mat-error *ngIf="form.get('deadline').invalid">Please enter valid Date</mat-error>
     </mat-form-field>
     <!-- category -->
     <div class="category-toggle">
-      <mat-button-toggle-group formControlName="group" appearance="legacy" name="fontStyle" aria-label="Font Style">
+      <mat-button-toggle-group formControlName="group" appearance="legacy">
         <mat-button-toggle value=0 >
           <mat-icon>add_shopping_cart</mat-icon>
           <p> shopping </p>

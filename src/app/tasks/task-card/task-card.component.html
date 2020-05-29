@@ -1,38 +1,58 @@
-<mat-spinner *ngIf="isLoading"></mat-spinner>
-<div class="col-md-6 offset-md-3 mt-5">
-  <mat-accordion multi="false" *ngIf="tasks.length > 0 && !isLoading" hideToggle>
-    <mat-expansion-panel *ngFor="let task of tasks">
-      <mat-expansion-panel-header >
-        <mat-panel-title>
-          <mat-icon class="example-icon" color="primary">{{iconTaskStatus(task.status, task.startDate, task.deadlineDate)}}</mat-icon>
-        </mat-panel-title>
-        <mat-panel-description>
-          {{ task.title }}
-        </mat-panel-description>
-        <mat-icon class="example-icon" color="primary">{{iconTaskCategory(task.category)}}</mat-icon>
-      </mat-expansion-panel-header>
-      <mat-toolbar>
-        <mat-toolbar-row>
-          <div *ngIf="daysRemaining(task.deadlineDate) >= 0" style="color:blueviolet;">
-            {{ daysRemaining(task.deadlineDate) }} days rem.
-          </div>
-          <div *ngIf="daysRemaining(task.deadlineDate) < 0" text style="color:red;">
-            {{ (-1)*daysRemaining(task.deadlineDate) }} days late.
-          </div>
-          <span class="example-spacer"></span>
-          <p>{{task.deadlineDate}}</p>
-          <p> {{task.status}} </p>
-          <p> {{task.category}} </p>
-        </mat-toolbar-row>
-      </mat-toolbar>
-      <mat-action-row>
-        <button mat-button color="primary"  (click)="onEditTask(task)">EDIT</button>
-        <button mat-button color="warn" (click)="onUpdateStatus(task.id,task)">DONE</button>
-      </mat-action-row>
-    </mat-expansion-panel>
-  </mat-accordion>
-</div>
 
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<main class="main-area">
+  <div class="centered">
+      <section class="cards" *ngIf="tasks.length > 0 && !isLoading">
+
+          <article class="card" *ngFor="let task of tasks">
+              <mat-card class="card-content">
+                <mat-card-header>
+                  <div mat-card-avatar style="background-size: cover;">
+                    <mat-icon>
+                      {{iconTaskStatus(task.status, task.startDate, task.deadlineDate)}}
+                    </mat-icon>
+                  </div>
+                  <mat-card-title>{{ task.title }}</mat-card-title>
+                  <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+                  <span style="flex: 1 1 auto;"></span>
+                  <mat-icon mat-icon-button [matMenuTriggerFor]="menu">more_vert</mat-icon>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item mat-button color="black" (click)="onEditTask(task)">
+                      <mat-icon>edit</mat-icon>
+                      <span>Edit</span>
+                    </button>
+                    <button mat-menu-item mat-button color="primary" (click)="onUpdateStatus(task.id,task)">
+                      <mat-icon>done_outline</mat-icon>
+                      <span>Mark as Done</span>
+                    </button>
+                  </mat-menu>
+                </mat-card-header>
+                <div class="flex">
+                  <div>
+                    <div *ngIf="!task.status" style="color:green;">
+                      done!
+                    </div>
+                    <div *ngIf="task.status && daysRemaining(task.startDate) >= 0" style="color:yellow;">
+                      {{ daysRemaining(task.startDate) }} days to start
+                    </div>
+                    <div *ngIf="task.status && daysRemaining(task.deadlineDate) >= 0" style="color:orangered;">
+                      {{ daysRemaining(task.deadlineDate) }} days to end
+                    </div>
+                    <div *ngIf="task.status && daysRemaining(task.deadlineDate) < 0" style="color:red;">
+                      {{ (-1)*daysRemaining(task.deadlineDate) }} days late
+                    </div>
+                  </div>
+
+                  <span style="flex: 1 1 auto;"></span>
+                  <mat-icon class="example-icon" color="primary">{{iconTaskCategory(task.category)}}</mat-icon>
+                  <div> {{textTaskCategory(task.category)}} </div>
+                </div>
+              </mat-card>
+          </article><!-- .card -->
+
+      </section><!-- .cards -->
+  </div><!-- .centered -->
+</main>
 <p class="info-text mat-body-1" *ngIf="tasks.length <= 0">No posts added yet!</p>
 
 

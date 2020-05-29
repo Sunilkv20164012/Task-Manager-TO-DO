@@ -94,6 +94,9 @@ export class TaskCreateComponent implements OnInit, OnDestroy {
       this.tasksService.addTask(newTask)
       .subscribe(responseData => {
         this.closeDialog();
+        this.router.navigate(["/"]).then(() => {
+          window.location.reload();
+        });
       });
     }else{
       newTask.id = this.taskId;
@@ -105,7 +108,6 @@ export class TaskCreateComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         console.log("now navigating to home");
         this.closeDialog();
-
       });
     }
 

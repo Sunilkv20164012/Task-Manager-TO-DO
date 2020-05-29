@@ -61,7 +61,7 @@ export class TaskService {
   }
 
   updateTask(taskId: string,task: Task) {
-    console.log(taskId + " ; " + task);
+    console.log(task.status);
     return this.http
     .put("http://localhost:3000/api/tasks/" + taskId, task)
   }

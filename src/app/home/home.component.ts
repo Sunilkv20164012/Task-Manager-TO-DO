@@ -13,13 +13,21 @@ import { TaskCreateComponent } from '../tasks/task-create/task-create.component'
   templateUrl: './home.component.html',
   styleUrls: ["./home.component.scss"]
 })
-export class HomeComponent implements OnInit{
-    public title = "Samples";
-    private isIE = !((window as any).ActiveXObject) && "ActiveXObject" in window;
-    private theme = "default-theme";
-    private styleElem: HTMLStyleElement;
-    private typefacesLoaded = ["Titillium Web", "Roboto"];
-    private typefaceUrl = "https://fonts.googleapis.com/css?family=";
+export class HomeComponent{
+
+    public navItems = [
+      { name: "ballot", text: "All Task", type: "time", color: "black" },
+      { name: "today", text: "Today", type: "time", color: "green" },
+      { name: "calendar_today", text: "This Weak", type: "time", color: "yellow" },
+      { name: "playlist_add_check", text: "Archived", type: "status", color: "brown" },
+      { name: "access_alarm", text: "Pending", type: "status", color: "red" },
+      { name: "shopping_cart", text: "Shopping", type: "category", color: "grey" },
+
+    ];
+    public selected = "All Task";
+
+    @ViewChild(IgxNavigationDrawerComponent, { static: true })
+    public drawer: IgxNavigationDrawerComponent;
 
     constructor(private authService: AuthService,
       public dialog: MatDialog,
@@ -29,66 +37,12 @@ export class HomeComponent implements OnInit{
     openTaskCreateDialogue() {
       const dialogRef = this.dialog.open(TaskCreateComponent);
       dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result.data}`);
+      console.log(`Dialog result: ${result}`);
       });
-    }
-
-
-    public ngOnInit() {
-        this.createThemeStyle();
-    }
-    @HostListener("window:message", ["$event"])
-    private onMessage(e: MessageEvent) {
-        if (e.origin === e.data.origin && typeof e.data.themeStyle === "string") {
-            this.styleElem.textContent = e.data.themeStyle;
-            const typeface = window.getComputedStyle(this.document.body).fontFamily.replace(/\"/g, "");
-            if (!(typeface.match(/,/g) || []).length &&
-                !this.typefacesLoaded.includes(typeface)) {
-                this.typefacesLoaded.push(typeface);
-                this.createTypefaceLink(typeface);
-            }
-        } else if (e.origin === e.data.origin && typeof e.data.theme === "string") {
-            this.document.body.classList.remove(this.theme);
-            this.document.body.classList.add(e.data.theme);
-            this.theme = e.data.theme;
-        }
-    }
-
-    private createTypefaceLink(typeface: string) {
-        const typefaceElem = this.document.createElement("link");
-        typefaceElem.rel = "stylesheet";
-        typefaceElem.id = "ignteui-theme-typeface";
-        typefaceElem.href = this.typefaceUrl + typeface.split(" ").join("+");
-        document.head.insertBefore(typefaceElem, this.document.head.lastElementChild);
-    }
-
-    private createThemeStyle() {
-        if (this.isIE) {
-            this.document.body.classList.add(this.theme);
-        } else {
-            this.styleElem = document.createElement("style");
-            this.styleElem.id = "igniteui-theme";
-            document.head.insertBefore(this.styleElem, this.document.head.lastElementChild);
-            this.document.body.classList.add("custom-body");
-        }
-    }
+    };
 
 
 
-
-
-    public navItems = [
-      { name: "account_circle", text: "Avatar" },
-      { name: "error", text: "Badge" },
-      { name: "group_work", text: "Button Group" },
-      { name: "home", text: "Card" },
-      { name: "view_carousel", text: "Carousel" },
-
-    ];
-    public selected = "Avatar";
-
-    @ViewChild(IgxNavigationDrawerComponent, { static: true })
-    public drawer: IgxNavigationDrawerComponent;
 
     public drawerState = {
       miniTemplate: false,

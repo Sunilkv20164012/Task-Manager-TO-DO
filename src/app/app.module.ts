@@ -19,10 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSelectModule} from '@angular/material/select';
-
-
-
-import {CdkScrollableModule} from '@angular/cdk/scrolling';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 
@@ -35,7 +32,8 @@ import {
 	IgxRadioModule,
 	IgxRippleModule,
 	IgxSwitchModule,
-	IgxToggleModule
+  IgxToggleModule,
+  IgxExpansionPanelModule
  } from "igniteui-angular";
 
 
@@ -61,13 +59,13 @@ import { ErrorComponent } from "./error/error.component";
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    MatToolbarModule, MatTabsModule, MatFormFieldModule, MatInputModule, MatSidenavModule, MatDialogModule, MatProgressSpinnerModule,
-    MatDatepickerModule, MatNativeDateModule, MatButtonToggleModule, MatCardModule, MatIconModule, MatExpansionModule, MatSelectModule,
+    MatToolbarModule, MatTabsModule, MatFormFieldModule, MatInputModule, MatSidenavModule, MatDialogModule,
+    MatProgressSpinnerModule, MatSelectModule, MatMenuModule,
+    MatDatepickerModule, MatNativeDateModule, MatButtonToggleModule, MatCardModule, MatIconModule, MatExpansionModule,
     FormsModule,
     BrowserAnimationsModule,
     IgxButtonModule, IgxIconModule, IgxLayoutModule, IgxNavigationDrawerModule,
     IgxRadioModule,	IgxRippleModule, IgxSwitchModule,	IgxToggleModule,
-    CdkScrollableModule,
     HttpClientModule
   ],
   declarations: [
