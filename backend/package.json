@@ -1,0 +1,19 @@
+{
+  "name": "task-manager-to-do",
+  "version": "0.0.0",
+  "scripts": {
+    "start:server": "nodemon server.js"
+  },
+  "private": true,
+  "dependencies": {
+    "@types/hammerjs": "^2.0.36",
+    "@types/jszip": "^3.1.7",
+    "bcryptjs": "^2.4.3",
+    "hammerjs": "^2.0.8",
+    "jsonwebtoken": "^8.5.1",
+    "jszip": "^3.3.0",
+    "mongoose": "^5.9.15",
+    "mongoose-unique-validator": "^2.0.3"
+  },
+  "devDependencies": {}
+}

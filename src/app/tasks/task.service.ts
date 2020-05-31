@@ -6,6 +6,9 @@ import { map } from 'rxjs/operators';
 
 
 import { Task, CategoryType } from './task.model';
+import { environment } from '../../environments/environment';
+
+const BACKEND_URL = environment.apiUrl+"/tasks/";
 
 @Injectable({providedIn: 'root'})
 export class TaskService {
@@ -17,7 +20,7 @@ export class TaskService {
   getTasks() {
     this.http
       .get<{ message: string; tasks: any }>(
-        "http://localhost:3000/api/tasks"
+        BACKEND_URL
       )
       .pipe(map((taskData) => {
         return taskData.tasks.map(task => {
@@ -52,22 +55,22 @@ export class TaskService {
       category: CategoryType;
       status: boolean;
       creator: string;
-    }>("http://localhost:3000/api/tasks/" + id);
+    }>(BACKEND_URL + id);
   }
 
   addTask(newTask: Task ) {
     return this.http
-      .post<{ message: string,taskId: string }>("http://localhost:3000/api/tasks", newTask)
+      .post<{ message: string,taskId: string }>(BACKEND_URL, newTask)
   }
 
   updateTask(taskId: string,task: Task) {
     console.log(task.status);
     return this.http
-    .put("http://localhost:3000/api/tasks/" + taskId, task)
+    .put(BACKEND_URL + taskId, task)
   }
 
   deletePost(taskId: string) {
-    return this.http.delete("http://localhost:3000/api/tasks/" + taskId)
+    return this.http.delete(BACKEND_URL + taskId)
   }
 
 }

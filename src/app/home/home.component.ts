@@ -53,8 +53,5 @@ export class HomeComponent{
     /** Select item and close drawer if not pinned */
     public navigate(item) {
       this.selected = item.text;
-      if (!this.drawer.pin) {
-        this.drawer.close();
-      }
     }
 }
