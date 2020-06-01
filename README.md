@@ -1,5 +1,7 @@
 * [StackHack 1.0](https://www.hackerearth.com/challenges/hackathon/stackhack-v1/) - Hackathon
 
+* [Heroku Deploy Instructions](https://itnext.io/how-to-deploy-angular-application-to-heroku-1d56e09c5147) - Medium 
+
 # On Front End:
 
 
@@ -23,7 +25,8 @@ Along with everything asked in Minimum Requirement :
 - [ ] Implement a feature to set the Status of the Tasks like ‘New’, ‘In progress’ and ‘Completed’.
 - [ ] You are supposed to implement these features for an End-to-End stack, implementation will go on the Frontend as well as Backend.
 - [ ] Store the relevant flags in the database.
-- [ ] Extra Work (experienced / wizard)
+
+# Extra Work (experienced / wizard)
 
 Along with everything from the above two levels :
 

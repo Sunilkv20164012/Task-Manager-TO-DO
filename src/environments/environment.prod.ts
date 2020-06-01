@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://alarming-butler.herokuapp.com/api'
+    apiUrl: 'https://alarming-butler-backend.herokuapp.com/api'
 };
