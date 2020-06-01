@@ -1,5 +1,6 @@
 
 # Implementation and Deployment
+=============
 
 * [Alarming-Butler](https://alarming-butler-front.herokuapp.com/) 
 
@@ -8,8 +9,10 @@ The basic structure of this project consist of Frontend and Backend implemented 
 The Backend part has Mongo Database for storing user signup data and tasks details created by individual users as well.
 The Frontend is developed on Angular.
 
+=============
 
 ## To run this project locally:
+=============
 
 ### make sure in src -> environments -> environment.ts 
 > apiUrl: 'http://localhost:3000/api'
@@ -19,7 +22,10 @@ The Frontend is developed on Angular.
 
 Now open browser and go to  * [http://localhost:4200](http://localhost:4200)
 
+=============
+
 ## To deploy this project:
+=============
 
 ### make sure in src -> environments -> environment.ts
 > apiUrl: '<link to the platform on which backend is deployed>/api'
