@@ -1,7 +1,9 @@
-import { Component, OnInit, OnDestroy, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewEncapsulation, ChangeDetectionStrategy, ViewChild, HostListener } from "@angular/core";
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Router } from "@angular/router";
+import { IgxNavigationDrawerComponent } from "igniteui-angular";
+
 
 
 import { Task, StatusType, CategoryType } from "../task.model";
@@ -20,16 +22,35 @@ import { AuthService } from "../../account/auth.service";
 export class TaskListComponent implements OnInit, OnDestroy {
 
   tasks: Task[] = [];
+  filteredTasks: Task[] = [];
   isLoading = false;
   userIsAuthenticated = false;
   userId: string;
   private tasksSub: Subscription;
   private authStatusSub: Subscription;
 
+
+  public navItems = [
+    { name: "ballot", text: "All Task", type: "time", color: "black", val:0 },
+    { name: "today", text: "Today", type: "time", color: "green", val:1 },
+    { name: "calendar_today", text: "This Weak", type: "time", color: "yellow", val:7 },
+    { name: "playlist_add_check", text: "Archived", type: "status", color: "brown", val:false },
+    { name: "access_alarm", text: "Pending", type: "status", color: "red", val:true  },
+    { name: "shopping_cart", text: "Shopping", type: "category", color: "grey", val:0 },
+
+  ];
+  public selected = "All Task";
+
+
+  @ViewChild(IgxNavigationDrawerComponent, { static: true })
+    public drawer: IgxNavigationDrawerComponent;
+
   constructor(public taskService: TaskService,
     private router: Router,
     private authService: AuthService,
      public dialog: MatDialog) {}
+
+
 
   ngOnInit() {
     this.isLoading = true;
@@ -39,6 +60,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
       .subscribe((tasks: Task[]) => {
         this.isLoading = false;
         this.tasks = tasks;
+        this.filteredTasks = tasks;
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService
@@ -47,6 +69,38 @@ export class TaskListComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.userId = this.authService.getUserId();
       });
+  }
+
+
+  public drawerState = {
+    miniTemplate: false,
+    open: true,
+    pin: true
+  };
+
+  /** Select item and close drawer if not pinned */
+  public navigate(item) {
+    this.selected = item.text;
+    if(item.type==="time")
+    {
+      if(item.val==0){
+        this.filteredTasks = this.tasks;
+      }else {
+        this.filteredTasks = this.tasks.filter(p => this.daysRemaining(p.startDate)<=item.val);
+      }
+    }
+    else if(item.type==="status")
+    {
+      this.filteredTasks = this.tasks.filter(p => p.status===item.val);
+    }
+    else if(item.type==="category")
+    {
+      this.filteredTasks = this.tasks.filter(p => p.category===item.val);
+    }
+    console.log("hello this is filtered list "+this.filteredTasks);
+    for(let i=0;i<this.filteredTasks.length;i++){
+      console.log(this.filteredTasks[i].title);
+    }
   }
 
   onUpdateStatus(taskId: string, task: Task) {
@@ -124,4 +178,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
     var diffDays:any = Math.floor((date1 - date2) / (1000 * 60 * 60 * 24));
     return diffDays;
   }
+
+
+
 }

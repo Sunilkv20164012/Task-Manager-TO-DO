@@ -3,6 +3,43 @@ body {
 	background: hsl(0, 0%, 90%);
 }
 
+
+
+.main {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid red;
+}
+
+main.mini-padding {
+  padding: 1rem calc(1rem + 60px);
+}
+
+/* Sample styling */
+.setting-title {
+  margin-bottom: 0;
+  color: rgba(228, 28, 119, 0.8) /*#e41c77cc*/ ;
+}
+
+.setting-note {
+  font-size: 14px;
+  color: #484848;
+  margin: 4px 0;
+}
+
+.igx-nav-drawer__aside::-webkit-scrollbar {
+  width: 3px;
+  background: #e4e4e4;
+}
+
+.igx-nav-drawer__aside::-webkit-scrollbar-thumb {
+  background: #0375be;
+  border-radius: 0;
+}
+
+
+
 .card {
 	background: white;
   margin: 2em 2em;
@@ -40,6 +77,8 @@ body {
   flex-wrap: wrap;
   /* justify-content: space-between; */
 }
+
+
 /* Flexbox stuff */
 
 @media screen and (min-width: 40em) {

@@ -1,61 +1,90 @@
 
-<mat-spinner *ngIf="isLoading"></mat-spinner>
-<!-- <cdk-virtual-scroll-viewport itemSize="50"> -->
-  <main class="main-area">
-    <div class="centered">
-        <section class="cards" *ngIf="tasks.length > 0 && !isLoading">
 
-            <article class="card" *ngFor="let task of tasks">
-                <mat-card class="card-content" style="min-width: 100px;">
-                  <mat-card-header>
-                    <div mat-card-avatar style="background-size: cover;">
-                      <mat-icon>
-                        {{iconTaskStatus(task.status, task.startDate, task.deadlineDate)}}
-                      </mat-icon>
-                    </div>
-                    <mat-card-title>{{ task.title }}</mat-card-title>
-                    <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
-                    <span style="flex: 1 1 auto;"></span>
-                    <mat-icon mat-icon-button [matMenuTriggerFor]="menu">more_vert</mat-icon>
-                    <mat-menu #menu="matMenu">
-                      <button mat-menu-item mat-button color="black" (click)="onEditTask(task)">
-                        <mat-icon>edit</mat-icon>
-                        <span>Edit</span>
-                      </button>
-                      <button mat-menu-item mat-button color="primary" (click)="onUpdateStatus(task.id,task)">
-                        <mat-icon>done_outline</mat-icon>
-                        <span>Mark as Done</span>
-                      </button>
-                    </mat-menu>
-                  </mat-card-header>
-                  <div class="flex">
-                    <div>
-                      <div *ngIf="!task.status" style="color:green;">
-                        done!
-                      </div>
-                      <div *ngIf="task.status && daysRemaining(task.startDate) >= 0" style="color:yellow;">
-                        {{ daysRemaining(task.startDate) }} days to start
-                      </div>
-                      <div *ngIf="task.status && daysRemaining(task.deadlineDate) >= 0" style="color:orangered;">
-                        {{ daysRemaining(task.deadlineDate) }} days to end
-                      </div>
-                      <div *ngIf="task.status && daysRemaining(task.deadlineDate) < 0" style="color:red;">
-                        {{ (-1)*daysRemaining(task.deadlineDate) }} days late
-                      </div>
-                    </div>
 
-                    <span style="flex: 1 1 auto;"></span>
-                    <mat-icon class="example-icon" color="primary">{{iconTaskCategory(task.category)}}</mat-icon>
-                    <div> {{textTaskCategory(task.category)}} </div>
-                  </div>
-                </mat-card>
-            </article><!-- .card -->
+<div class="main" igxLayout>
+  <igx-nav-drawer id="navigation" [isOpen]="drawerState.open" [(pin)]="drawerState.pin">
+    <ng-template igxDrawer>
+      <nav>
+        <span igxDrawerItem [isHeader]="true">Components</span>
 
-        </section><!-- .cards -->
-    </div><!-- .centered -->
+        <span *ngFor="let item of navItems" igxDrawerItem [active]="item.text === selected" igxRipple (click)="navigate(item)">
+          <igx-icon fontSet="material">{{ item.name }}</igx-icon>
+          <span>{{ item.text }}</span>
+        </span>
+    </nav>
+    </ng-template>
+  </igx-nav-drawer>
+
+  <main igxFlex [class.mini-padding]="!drawerState.pin && drawerState.miniTemplate">
+    <span igxButton="icon" igxToggleAction="navigation">
+      <igx-icon fontSet="material">menu</igx-icon>
+    </span>
+
+      Selected: <span class="setting-title">{{ selected }}</span>
+
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+      <!-- <cdk-virtual-scroll-viewport itemSize="50"> -->
+        <main class="main-area">
+          <div class="centered">
+              <section class="cards" *ngIf="filteredTasks.length > 0 && !isLoading">
+
+                  <article class="card" *ngFor="let task of filteredTasks">
+                      <mat-card class="card-content" style="min-width: 100px;">
+                        <mat-card-header>
+                          <div mat-card-avatar style="background-size: cover;">
+                            <mat-icon>
+                              {{iconTaskStatus(task.status, task.startDate, task.deadlineDate)}}
+                            </mat-icon>
+                          </div>
+                          <mat-card-title>{{ task.title }}</mat-card-title>
+                          <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+                          <span style="flex: 1 1 auto;"></span>
+                          <mat-icon mat-icon-button [matMenuTriggerFor]="menu">more_vert</mat-icon>
+                          <mat-menu #menu="matMenu">
+                            <button mat-menu-item mat-button color="black" (click)="onEditTask(task)">
+                              <mat-icon>edit</mat-icon>
+                              <span>Edit</span>
+                            </button>
+                            <button mat-menu-item mat-button color="primary" (click)="onUpdateStatus(task.id,task)">
+                              <mat-icon>done_outline</mat-icon>
+                              <span>Mark as Done</span>
+                            </button>
+                          </mat-menu>
+                        </mat-card-header>
+                        <div class="flex">
+                          <div>
+                            <div *ngIf="!task.status" style="color:green;">
+                              done!
+                            </div>
+                            <div *ngIf="task.status && daysRemaining(task.startDate) >= 0" style="color:yellow;">
+                              {{ daysRemaining(task.startDate) }} days to start
+                            </div>
+                            <div *ngIf="task.status && daysRemaining(task.deadlineDate) >= 0" style="color:orangered;">
+                              {{ daysRemaining(task.deadlineDate) }} days to end
+                            </div>
+                            <div *ngIf="task.status && daysRemaining(task.deadlineDate) < 0" style="color:red;">
+                              {{ (-1)*daysRemaining(task.deadlineDate) }} days late
+                            </div>
+                          </div>
+
+                          <span style="flex: 1 1 auto;"></span>
+                          <mat-icon class="example-icon" color="primary">{{iconTaskCategory(task.category)}}</mat-icon>
+                          <div> {{textTaskCategory(task.category)}} </div>
+                        </div>
+                      </mat-card>
+                  </article><!-- .card -->
+
+              </section><!-- .cards -->
+          </div><!-- .centered -->
+        </main>
+
   </main>
+</div>
+
+
+
 <!-- </cdk-virtual-scroll-viewport> -->
 
-<p class="info-text mat-body-1" *ngIf="tasks.length <= 0">No posts added yet!</p>
+<p class="info-text mat-body-1" *ngIf="filteredTasks.length <= 0">No posts added yet!</p>
 
 
