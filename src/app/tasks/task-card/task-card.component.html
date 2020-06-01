@@ -32,8 +32,8 @@
                       <mat-card class="card-content" style="min-width: 100px;">
                         <mat-card-header>
                           <div mat-card-avatar style="background-size: cover;">
-                            <mat-icon>
-                              {{iconTaskStatus(task.status, task.startDate, task.deadlineDate)}}
+                            <mat-icon [matTooltipPosition]="'before'" matTooltip="{{iconTaskStatus(task.status, task.startDate, task.deadlineDate).tooltip}}">
+                              {{iconTaskStatus(task.status, task.startDate, task.deadlineDate).icon}}
                             </mat-icon>
                           </div>
                           <mat-card-title>{{ task.title }}</mat-card-title>
@@ -41,11 +41,11 @@
                           <span style="flex: 1 1 auto;"></span>
                           <mat-icon mat-icon-button [matMenuTriggerFor]="menu">more_vert</mat-icon>
                           <mat-menu #menu="matMenu">
-                            <button mat-menu-item mat-button color="black" (click)="onEditTask(task)">
+                            <button mat-menu-item color="black" (click)="onEditTask(task)">
                               <mat-icon>edit</mat-icon>
                               <span>Edit</span>
                             </button>
-                            <button mat-menu-item mat-button color="primary" (click)="onUpdateStatus(task.id,task)">
+                            <button mat-menu-item *ngIf="task.status==true" color="primary" (click)="onUpdateStatus(task.id,task)">
                               <mat-icon>done_outline</mat-icon>
                               <span>Mark as Done</span>
                             </button>
@@ -54,12 +54,12 @@
                         <div class="flex">
                           <div>
                             <div *ngIf="!task.status" style="color:green;">
-                              done!
+                              Already done!
                             </div>
-                            <div *ngIf="task.status && daysRemaining(task.startDate) >= 0" style="color:yellow;">
+                            <div *ngIf="task.status && daysRemaining(task.startDate) > 0" style="color:green;">
                               {{ daysRemaining(task.startDate) }} days to start
                             </div>
-                            <div *ngIf="task.status && daysRemaining(task.deadlineDate) >= 0" style="color:orangered;">
+                            <div *ngIf="task.status && daysRemaining(task.startDate) < 0 && daysRemaining(task.deadlineDate) >= 0" style="color:orange;">
                               {{ daysRemaining(task.deadlineDate) }} days to end
                             </div>
                             <div *ngIf="task.status && daysRemaining(task.deadlineDate) < 0" style="color:red;">
@@ -85,6 +85,6 @@
 
 <!-- </cdk-virtual-scroll-viewport> -->
 
-<p class="info-text mat-body-1" *ngIf="filteredTasks.length <= 0">No posts added yet!</p>
+<p class="info-text mat-body-1" *ngIf="filteredTasks.length <= 0">No tasks added yet!</p>
 
 

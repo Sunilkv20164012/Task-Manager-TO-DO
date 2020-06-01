@@ -1,6 +1,6 @@
 <mat-card>
   <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <h1 mat-dialog-title>To-Do Create/Edit!</h1>
+  <h3 mat-dialog-title>To-Do Create/Edit!</h3>
   <form [formGroup]="form" *ngIf="!isLoading">
     <!-- title -->
     <mat-form-field>
@@ -24,31 +24,23 @@
       <mat-error *ngIf="form.get('deadline').invalid">Please enter valid Date</mat-error>
     </mat-form-field>
     <!-- category -->
-    <div class="category-toggle">
+    <div >
       <mat-button-toggle-group formControlName="group" appearance="legacy">
         <mat-button-toggle value=0 >
-          <mat-icon>add_shopping_cart</mat-icon>
-          <p> shopping </p>
+          <mat-icon [matTooltipPosition]="'below'" matTooltip="shopping">add_shopping_cart</mat-icon>
         </mat-button-toggle>
         <mat-button-toggle value=1 >
-          <mat-icon>work</mat-icon>
-          <p> work </p>
+          <mat-icon [matTooltipPosition]="'below'" matTooltip="work">work</mat-icon>
         </mat-button-toggle>
         <mat-button-toggle value=2>
-          <mat-icon>healing</mat-icon>
-          <p> medical </p>
+          <mat-icon [matTooltipPosition]="'below'" matTooltip="learn">class</mat-icon>
         </mat-button-toggle>
         <mat-button-toggle value=3>
-          <mat-icon>class</mat-icon>
-          <p> learn </p>
-        </mat-button-toggle>
-        <mat-button-toggle value=4>
-          <mat-icon>extension</mat-icon>
-          <p> other </p>
+          <mat-icon [matTooltipPosition]="'below'" matTooltip="other">extension</mat-icon>
         </mat-button-toggle>
       </mat-button-toggle-group>
-      <div><p>Selected Category: {{form.get('group').value}}</p></div>
     </div>
+    <div style="visibility: hidden;"><p>Selected Category: {{form.get('group').value}}</p></div>
 
 
     <div mat-dialog-actions>

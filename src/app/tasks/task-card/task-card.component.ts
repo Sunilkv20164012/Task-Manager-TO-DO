@@ -31,13 +31,16 @@ export class TaskListComponent implements OnInit, OnDestroy {
 
 
   public navItems = [
-    { name: "ballot", text: "All Task", type: "time", color: "black", val:0 },
-    { name: "today", text: "Today", type: "time", color: "green", val:1 },
+    { name: "ballot", text: "All Task", type: "time", color: "black", val:-1 },
+    { name: "today", text: "Today", type: "time", color: "green", val:0 },
     { name: "calendar_today", text: "This Weak", type: "time", color: "yellow", val:7 },
     { name: "playlist_add_check", text: "Archived", type: "status", color: "brown", val:false },
     { name: "access_alarm", text: "Pending", type: "status", color: "red", val:true  },
     { name: "shopping_cart", text: "Shopping", type: "category", color: "grey", val:0 },
-
+    { name: "work", text: "Work", type: "category", color: "grey", val:1 },
+    { name: "healing", text: "Medical", type: "category", color: "grey", val:2 },
+    { name: "class", text: "Learning", type: "category", color: "grey", val:3 },
+    { name: "extension", text: "Others", type: "category", color: "grey", val:4 }
   ];
   public selected = "All Task";
 
@@ -60,7 +63,8 @@ export class TaskListComponent implements OnInit, OnDestroy {
       .subscribe((tasks: Task[]) => {
         this.isLoading = false;
         this.tasks = tasks;
-        this.filteredTasks = tasks;
+        console.log(tasks);
+        this.filteredTasks = this.tasks.filter(p => p.status==true);
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService
@@ -83,24 +87,27 @@ export class TaskListComponent implements OnInit, OnDestroy {
     this.selected = item.text;
     if(item.type==="time")
     {
-      if(item.val==0){
-        this.filteredTasks = this.tasks;
+      if(item.val===-1){
+        this.filteredTasks = this.tasks.filter(p => p.status==true);
       }else {
-        this.filteredTasks = this.tasks.filter(p => this.daysRemaining(p.startDate)<=item.val);
+        this.filteredTasks = this.tasks.filter(p => this.daysRemaining(p.startDate)<=item.val && p.status==true);
       }
     }
     else if(item.type==="status")
     {
-      this.filteredTasks = this.tasks.filter(p => p.status===item.val);
+      if(item.val==true){
+        this.filteredTasks = this.tasks.filter(p => p.status==true && this.daysRemaining(p.deadlineDate)<0 );
+      }
+      else{
+        this.filteredTasks = this.tasks.filter(p => p.status==false);
+      }
     }
     else if(item.type==="category")
     {
-      this.filteredTasks = this.tasks.filter(p => p.category===item.val);
+      this.filteredTasks = this.tasks.filter(p => p.category==item.val);
     }
     console.log("hello this is filtered list "+this.filteredTasks);
-    for(let i=0;i<this.filteredTasks.length;i++){
-      console.log(this.filteredTasks[i].title);
-    }
+
   }
 
   onUpdateStatus(taskId: string, task: Task) {
@@ -108,6 +115,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
     this.taskService.updateTask(taskId,task).subscribe(response =>{
       console.log(response);
     });
+    this.filteredTasks = this.filteredTasks.filter(p => p.id!=taskId);
   }
 
   onEditTask(task: Task) {
@@ -136,10 +144,10 @@ export class TaskListComponent implements OnInit, OnDestroy {
     var daystoDead = this.daysRemaining(deadline);
 
     const taskCardClass = {
-      [StatusType.Done]: 'done_all',
-      [StatusType.Pending]: 'report',
-      [StatusType.InProgress]: 'cached',
-      [StatusType.New]: 'rowing'
+      [StatusType.Done]: {icon: 'done_all',tooltip: "done!"},
+      [StatusType.Pending]: {icon: 'report',tooltip: "pending!"},
+      [StatusType.InProgress]: {icon: 'cached',tooltip: "in progress!"},
+      [StatusType.New]: {icon: 'rowing',tooltip: "new!"}
     }
     if(!status){
       return taskCardClass[StatusType.Done];
@@ -161,7 +169,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
       [CategoryType.Shopping]: 'add_shopping_cart',
       [CategoryType.Work]: 'work',
       [CategoryType.Medical]: 'healing',
-      [CategoryType.Learning]: 'account_balance',
+      [CategoryType.Learning]: 'class',
       [CategoryType.Other]: 'extension',
     }
     return taskCardClass[taskCategory];
@@ -175,10 +183,9 @@ export class TaskListComponent implements OnInit, OnDestroy {
   daysRemaining(deadlineDate: Date){
     var date1:any = new Date(deadlineDate);
     var date2:any = new Date();
-    var diffDays:any = Math.floor((date1 - date2) / (1000 * 60 * 60 * 24));
-    return diffDays;
+    var diff1:any = Math.floor((date1) / (1000 * 60 * 60 * 24));
+    var diff2:any = Math.floor((date2) / (1000 * 60 * 60 * 24));
+    return (diff1-diff2);
   }
-
-
 
 }

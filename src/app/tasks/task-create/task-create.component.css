@@ -22,15 +22,13 @@ mat-spinner {
 .example-double-arrow .mat-icon {
   margin: -22%;
 }
-/*
-.category-toggle {
-  display: flex;
-  justify-content: space-between;
-} */
+
 
 mat-button-toggle-group {
-  /* margin-left: 12px; */
   display: flex;
   justify-content: space-between;
 }
-
+mat-button-toggle {
+  padding: 3px 3px;
+  margin: 5px 5px;
+}

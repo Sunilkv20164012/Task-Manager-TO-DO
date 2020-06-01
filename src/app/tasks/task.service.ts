@@ -64,7 +64,7 @@ export class TaskService {
   }
 
   updateTask(taskId: string,task: Task) {
-    console.log(task.status);
+    console.log(task.category);
     return this.http
     .put(BACKEND_URL + taskId, task)
   }

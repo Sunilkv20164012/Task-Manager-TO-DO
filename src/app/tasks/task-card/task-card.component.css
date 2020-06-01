@@ -48,7 +48,7 @@ main.mini-padding {
 
 .card a {
 	color: black;
-	text-decoration: none;
+	text-decoration: solid;
 }
 
 .card a:hover {

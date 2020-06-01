@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    apiUrl: 'https://alarming-butler-backend.herokuapp.com/api'
+    apiUrl: 'http://localhost:3000/api'
 };
 
 /*

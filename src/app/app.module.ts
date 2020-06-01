@@ -21,7 +21,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
 import {ScrollingModule} from '@angular/cdk/scrolling';
-
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
 
 
 //navigation
@@ -61,7 +62,7 @@ import { ErrorComponent } from "./error/error.component";
     HttpClientModule,
     AppRoutingModule,
     MatToolbarModule, MatTabsModule, MatFormFieldModule, MatInputModule, MatSidenavModule, MatDialogModule,
-    MatProgressSpinnerModule, MatSelectModule, MatMenuModule, ScrollingModule,
+    MatProgressSpinnerModule, MatSelectModule, MatMenuModule, ScrollingModule, MatTooltipModule, MatButtonModule,
     MatDatepickerModule, MatNativeDateModule, MatButtonToggleModule, MatCardModule, MatIconModule, MatExpansionModule,
     FormsModule,
     BrowserAnimationsModule,

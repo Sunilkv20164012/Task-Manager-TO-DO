@@ -83,7 +83,7 @@ export class TaskCreateComponent implements OnInit, OnDestroy {
       id: null,
       title: this.form.value.title,
       deadlineDate: this.form.value.deadline,
-      startDate: curdate,
+      startDate: this.form.value.startdate,
       category: this.form.value.group,
       status: true,
       creator: null
@@ -91,6 +91,8 @@ export class TaskCreateComponent implements OnInit, OnDestroy {
 
     this.isLoading = true;
     if (this.mode === "create") {
+
+      console.log("churake dil mera");
       this.tasksService.addTask(newTask)
       .subscribe(responseData => {
         this.closeDialog();
@@ -101,9 +103,9 @@ export class TaskCreateComponent implements OnInit, OnDestroy {
     }else{
       newTask.id = this.taskId;
       newTask.title = this.form.value.title;
+      newTask.startDate = this.form.value.startdate;
       newTask.deadlineDate = this.form.value.deadlineDate;
-      newTask.category = this.form.value.category;
-      console.log("mode" + this.mode + " "+this.task);
+      console.log("mode" + this.mode + " "+this.form.value.group);
       this.tasksService.updateTask(this.taskId, newTask)
       .subscribe(() => {
         console.log("now navigating to home");
