@@ -9,7 +9,7 @@
 
   
 
-*  [Alarming-Butler](https://alarming-butler-front.herokuapp.com/) <= Already deployed project link.
+*  [Alarming-Butler](https://alarming-butler-front.herokuapp.com/)
 
   
   
