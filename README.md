@@ -8,9 +8,6 @@ Table of contents
   
 
 <!--ts-->
-
-*  [Table of contents](#table-of-contents)
-
 *  [Installation and Deployment](#installation-and-Deployment)
 
 	*  [To run the project locally](#to-run-the-project-locally)
