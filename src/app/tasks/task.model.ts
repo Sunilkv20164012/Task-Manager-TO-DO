@@ -11,7 +11,6 @@ export interface Task {
 export enum CategoryType {
   Shopping,
   Work,
-  Medical,
   Learning,
   Other
 }

@@ -1,19 +1,11 @@
-import { NgForm } from "@angular/forms";
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  OnInit,
-  OnDestroy
-} from '@angular/core';
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, OnDestroy} from '@angular/core';
 import {MatCalendar} from '@angular/material/datepicker';
 import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats} from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActivatedRoute, ParamMap } from "@angular/router";
 import {Subject, Subscription} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ValidationErrors } from "@angular/forms";
 import { Router } from "@angular/router";
 
 
@@ -21,6 +13,13 @@ import { TaskService } from "../task.service";
 import { CategoryType, Task } from '../task.model';
 import { AuthService } from "../../account/auth.service";
 
+
+export const MyDateRangeValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
+  const start = control.get('startdate');
+  const end = control.get('deadline');
+
+  return start.value>end.value ? { 'range': true } : null;
+};
 
 @Component({
   selector: "app-task-create",
@@ -64,11 +63,15 @@ export class TaskCreateComponent implements OnInit, OnDestroy {
       // form validation
       this.form = new FormGroup({
         title: new FormControl(this.task ? this.task.title : null, {
-          validators: [Validators.required, Validators.minLength(3)]
+          validators: [Validators.required, Validators.minLength(3), Validators.maxLength(50)]
         }),
         startdate: new FormControl(this.task ? this.task.startDate : null, { validators: [Validators.required] }),
-        deadline: new FormControl(this.task ? this.task.deadlineDate : null, { validators: [Validators.required] }),
+        deadline: new FormControl(this.task ? this.task.deadlineDate : null,
+          { validators: [Validators.required] }
+          ),
         group: new FormControl(this.task ? this.task.category : CategoryType.Other,{ validators: [Validators.required] })
+      },{
+        validators: MyDateRangeValidator
       });
   }
 

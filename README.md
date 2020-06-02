@@ -1,20 +1,53 @@
 
   
 
-  
+Table of contents
 
-# Implementation and Deployment
-
-  
+=================
 
   
 
-*  [Alarming-Butler](https://alarming-butler-front.herokuapp.com/)
+<!--ts-->
+
+*  [Table of contents](#table-of-contents)
+
+*  [Installation and Deployment](#installation-and-Deployment)
+
+	*  [To run the project locally](#to-run-the-project-locally)
+	*  [To deploy this project](#to-deploy-this-project)
+* [Project Description](#project-description)
+	* [Frontend](#frontend)
+	* [Backend](#backend)
+* [Screenshots](#screenshots)
+<!--te-->
 
   
+
   
 
- - The basic structure of this project consist of Frontend and Backend implemented on * [MEAN](https://en.wikipedia.org/wiki/MEAN_(solution_stack)) stack technology.
+# Installation and Deployment
+
+  
+
+  
+
+  
+
+  
+
+[Alarming-Butler](https://alarming-butler-front.herokuapp.com/)
+
+  
+
+  
+
+  
+
+- The basic structure of this project consist of Frontend and Backend implemented on [MEAN](https://en.wikipedia.org/wiki/MEAN_(solution_stack)) stack technology.
+
+  
+
+  
 
   
 
@@ -24,7 +57,15 @@
 
   
 
--  The Frontend is developed on Angular (locally on port 4200)
+  
+
+  
+
+- The Frontend is developed on Angular (locally on port 4200)
+
+  
+
+  
 
   
 
@@ -33,18 +74,48 @@
 ## To run the project locally:
 
   
-1. Set the environment Variable from  
+
+  
+
+1. Set the environment Variable from
+
+  
+
 ### frontend -> src -> environments -> environment.ts
+
+  
+
+  
 
 > apiUrl: 'http://localhost:3000/api'
 
+  
+
+  
+
 2. Go to backend/ and run following command to start backend on local
+
+  
+
+  
 
 `command$: npm start`
 
- 3. Go to frontend/ and run following command to starrt frontend on local
+  
+
+  
+
+3. Go to frontend/ and run following command to start frontend on local
+
+  
+
+  
 
 `command$: ng serve`
+
+  
+
+  
 
   
 
@@ -54,141 +125,177 @@
 
   
 
-## To deploy this project:
-
-1. Set the environment Variable from  
-### frontend -> src -> environments -> environment.ts
-
-  for e.g. in my case :-
-> apiUrl:  'https://alarming-butler-backend.herokuapp.com/api'
+  
 
   
 
+## To deploy this project
+
+  
+
+  
+
+1. Set the environment Variable from
+
+  
+
+### frontend -> src -> environments -> environment.ts
+
+  
+
+  
+
+for e.g. in my case :-
+
+  
+
+> apiUrl: 'https://alarming-butler-backend.herokuapp.com/api'
+
+
 2. Add following in package.json -> scripts
+
+  for **ng build** on platform to be deployed on. 
+
 
 ` "postinstall": "ng build --aot --prod" `
 
+  
 
-3. Deploy the backend folder on any platform , command to start  
-`command$: npm start`  
+  
 
-4.  Deploy the frontend folder on any platform with the changes applied above , command to start  
-`command$: npm start`  
+3. Deploy the backend folder on any platform , command to start
+
+  
+
+`command$: npm start`
+
+  
+To check if backend server is up and running make a get request on `https://<deployed-web-app-link>.com/api/tasks` for e.g. in my case https://alarming-butler-backend.herokuapp.com/api/tasks, 
+you will get message like:
+> {"message":"You are not authenticated!"}
+  
+
+4. Deploy the frontend folder on any platform with the changes applied above , command to start
+
+  
+
+`command$: npm start`
+
+  
+
+  
 
 5. Now open browser and go to the link to the platform on which backfrontend is deployed.
 
   
 
-# Basic Objectives of Competition
-
   
 
-*  [StackHack 1.0](https://www.hackerearth.com/challenges/hackathon/stackhack-v1/) - Hackathon
-
-  
-
-  
-
-*  [Heroku Deploy Instructions](https://itnext.io/how-to-deploy-angular-application-to-heroku-1d56e09c5147) - Medium
+# Project Description
 
   
 
   
 
-# On Front End:
+Alarming Butler is an MEAN stack based Task Manager (To Do list), which helps in easily managing tasks,
 
   
 
-  
-
-- [x] Implement a feature to add Tasks.
+with different labels, task start date and ending date, with which users can filter out the prior tasks.
 
   
 
-- [x] Implement a feature to set the due date for these tasks.
+## Frontend
+
+1. User Create & Edit To-Do list containg following details:
+
+- Task Title
+
+- Task start Date
+
+- Task Deadline Date
+
+- Task Category (e.g. Shopping, Work, Learning, Others)
+
+2. Filter out the tasks based on followings:
+
+- Today
+
+- In this Week
+
+- All Tasks
+
+- Archived
+
+- Pending
+
+- Categories : Shopping, Work, Learning, Others
+
+3. After completeing the task , user can mark it as Done, which results in transferring the task to archive section.
+
+4. New users can signup and old users can see their tasks added at any time after logging in.
 
   
 
-  
-
-# On Back end:
+## Backend
 
   
 
-  
+1. User *signup details* are stored in **Mongo-DB.**
 
-- [x] Implement the backend in one of the desired Tech-Stacks provided below.
+2. User created *tasks details* are added in **Mongo-DB**.
 
-  
+3. Request and response between Client & Server is done through ***REST API*** .
 
-- [x] Your backend is supposed to store all the tasks data received from the Frontend and store it in the Database.
+4. Data transfer is done in ***JSON*** format.
 
-  
+5. Project supports **authentication** as well as **authorization**.
 
-- [x] You are also supposed to implement a Database in the Backend which should store all this structured data.
+- Passwords of users are stored with hashing ( **bcryptjs** ).
 
-  
+- JWT tokens are used for authorization, which is used for **Auth-Interceptor** and **Auth-Guard**.
 
-- [x] The data sharing between Frontend and Backend should be in JSON format rendered over REST APIs.
-
-  
-
-- [ ] Zip all your Source Code, Screenshots, Deployment Instructions and Upload.
+- Tokens are stored on client-side in localstorage with expire-time, so that no need to login again after each refresh.
 
   
-
+  
   
 
-# Plus Point (intermediate)
+# ScreenShots
 
   
 
-  
+Login / Signup
 
-Along with everything asked in Minimum Requirement :
+![Signup](https://github.com/Sunilkv20164012/Task-Manager-To-Do/blob/master/images/Ssignup.png?raw=true)
 
-  
-
-  
-
-- [x] Implement a feature to set Labels to Tasks like ‘Personal’, ‘Work’, ‘Shopping’ and ‘Others’.
+![Login](https://github.com/Sunilkv20164012/Task-Manager-To-Do/blob/master/images/login.png?raw=true)
 
   
 
-- [x] Implement a feature to set the Status of the Tasks like ‘New’, ‘In progress’ and ‘Completed’.
+Task Manager Panel
+
+![Filtered Tasks](https://github.com/Sunilkv20164012/Task-Manager-To-Do/blob/master/images/filtered-tasks.png?raw=true)
+
+![Archived-Tasks](https://github.com/Sunilkv20164012/Task-Manager-To-Do/blob/master/images/archived-tasks.png?raw=true)
+
+![Pending-Tasks](https://github.com/Sunilkv20164012/Task-Manager-To-Do/blob/master/images/pending-tasks.png?raw=true)
 
   
 
-- [x] You are supposed to implement these features for an End-to-End stack, implementation will go on the Frontend as well as Backend.
+Task Create / Edit Panel
 
   
 
-- [x] Store the relevant flags in the database.
+![Task Create/Edit](https://github.com/Sunilkv20164012/Task-Manager-To-Do/blob/master/images/task-create.png?raw=true)
+
+![Task Datepicker](https://github.com/Sunilkv20164012/Task-Manager-To-Do/blob/master/images/task-create-datepicker.png?raw=true)
+
+  
+  
+
+Task Status Update Option
 
   
 
-  
-
-# Extra Work (experienced / wizard)
-
-  
-
-  
-
-Along with everything from the above two levels :
-
-  
-
-  
-
-- [x] Implement the Signup and Login/Logout functionality. You have to create user-auth schema in the database.
-
-  
-
-- [x] Implement a feature to Search and Filter Tasks based on Date-time, Priority and Labels, and a combination of at least two or more.
-
-  
-
-  
-
-Note : If you complete any or all of the above mentioned levels please do submit.
+![Task Options](https://github.com/Sunilkv20164012/Task-Manager-To-Do/blob/master/images/task-options.png?raw=true)

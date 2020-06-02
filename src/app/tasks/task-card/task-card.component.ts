@@ -38,9 +38,8 @@ export class TaskListComponent implements OnInit, OnDestroy {
     { name: "access_alarm", text: "Pending", type: "status", color: "red", val:true  },
     { name: "shopping_cart", text: "Shopping", type: "category", color: "grey", val:0 },
     { name: "work", text: "Work", type: "category", color: "grey", val:1 },
-    { name: "healing", text: "Medical", type: "category", color: "grey", val:2 },
-    { name: "class", text: "Learning", type: "category", color: "grey", val:3 },
-    { name: "extension", text: "Others", type: "category", color: "grey", val:4 }
+    { name: "class", text: "Learning", type: "category", color: "grey", val:2 },
+    { name: "extension", text: "Others", type: "category", color: "grey", val:3 }
   ];
   public selected = "All Task";
 
@@ -104,7 +103,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
     }
     else if(item.type==="category")
     {
-      this.filteredTasks = this.tasks.filter(p => p.category==item.val);
+      this.filteredTasks = this.tasks.filter(p => p.category==item.val && p.status==true);
     }
     console.log("hello this is filtered list "+this.filteredTasks);
 
@@ -168,7 +167,6 @@ export class TaskListComponent implements OnInit, OnDestroy {
     const taskCardClass = {
       [CategoryType.Shopping]: 'add_shopping_cart',
       [CategoryType.Work]: 'work',
-      [CategoryType.Medical]: 'healing',
       [CategoryType.Learning]: 'class',
       [CategoryType.Other]: 'extension',
     }
@@ -176,7 +174,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
   textTaskCategory(taskCategory: number)
   {
-    const taskCardClass = ['shopping', 'work', 'medical', 'learning', 'other'  ]
+    const taskCardClass = ['shopping', 'work', 'learning', 'other'  ]
     return taskCardClass[taskCategory];
   }
 
