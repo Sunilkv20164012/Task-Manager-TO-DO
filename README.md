@@ -256,6 +256,22 @@ with different labels, task start date and ending date, with which users can fil
 
   
   
+# Future Work
+
+1. Implementation of task type variation on basis of who has to perform task.
+	***For e.g.***   
+
+	- **Unicast Type**: A task which can be performed by a any person in a group.
+	 (eg. buying groceries, 
+	 doing a part of work in a team, 
+	 implementing different modules by developers individually and independently).
+	 Exact process will be: a group member generates a request in a group and whoever accepts the request first,
+	 						the task will be added in his/her list. 
+	
+	 - **Multicast Type**: A task which can be performed by more than one person in a group.
+	 (eg. scheduling an appointment)
+	 Exact process will be : a senior in an institute has to take a class like computer club, and has to announce this which is currnetly done on facebook pages, can be easily scheduled on Task Manager where he/she creates an announcement(task) and anyone who wants to attend the class can add it from notification 
+   
   
 
 # ScreenShots
